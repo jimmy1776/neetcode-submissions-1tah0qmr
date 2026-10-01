@@ -1,0 +1,63 @@
+#dr=1, dc=0 → (row+1, col) — cell below
+# dr=-1, dc=0 → (row-1, col) — cell above
+# dr=0, dc=1 → (row, col+1) — cell to the right
+# dr=0, dc=-1 → (row, col-1) — cell to the left
+
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int: 
+        if not grid:
+            return 0
+        
+        visit = set()
+        rows, cols = len(grid) , len(grid[0])
+        islands = 0 
+
+        #recursive 
+        def bfs(r,c):
+            q = collections.deque()
+            q.append((r,c))
+            visit.add((r,c))
+            
+            directions = [[1,0],[-1,0],[0,1],[0,-1]]
+            while q:
+                row, col = q.popleft() 
+                for dr,dc in directions:
+                    r, c = row + dr, col + dc
+                    if (r in range(rows) and 
+                        c in range(cols) and 
+                        grid[r][c] == "1" and 
+                        (r,c) not in visit): 
+
+                        q.append((r,c))
+                        visit.add((r,c))
+        for r in range(rows):
+            for c in range(cols):
+                if grid[r][c] == "1" and (r,c) not in visit:
+                    bfs(r,c)
+                    islands += 1 
+        return islands 
+
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
